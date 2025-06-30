@@ -1,0 +1,29 @@
+# Node-related
+node_modules
+npm-debug.log
+yarn-error.log
+
+# Build outputs
+.next
+dist
+out
+
+# Env/configs
+.env
+.env.local
+.env.development
+.env.production
+
+# OS/IDE stuff
+.DS_Store
+*.swp
+*.swo
+.vscode
+.idea
+
+# Git
+.git
+.gitignore
+
+# Docker ignore file itself
+.dockerignore
