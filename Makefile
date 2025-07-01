@@ -4,10 +4,10 @@ dev:
 prod:
 	docker compose -f docker/docker-compose.yml -f docker/docker-compose.prod.yml up
 
-dev build:
-	docker compose -f docker/docker-compose.yml -f docker/docker-compose.dev.yml up --build
+dev-build:
+	docker compose -f docker/docker-compose.yml -f docker/docker-compose.dev.yml up --build -d
 
-prod build:
+prod-build:
 	docker compose -f docker/docker-compose.yml -f docker/docker-compose.prod.yml up --build -d
 
 down:
@@ -20,4 +20,4 @@ validate:
 	docker compose -f docker/docker-compose.yml -f docker/docker-compose.dev.yml config
 
 clean:
-	docker system prun -f
+	docker system prune -f

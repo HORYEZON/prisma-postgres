@@ -8,7 +8,7 @@ services:
     depends_on:
       - db
     environment:
-      DATABASE_URL: "postgresql://postgres:postgres@db:5432/mydb?schema=public"
+      DATABASE_URL: "postgresql://rye:admin@db:5432/horyezon?schema=public"
     container_name: next-prisma-crud
 
   db:

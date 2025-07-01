@@ -1,0 +1,47 @@
+stages:
+  - build
+  - test
+  - deploy
+
+variables:
+  DOCKER_DRIVER: overlay2 # manage filesystem
+
+# BUILD
+
+build:
+  stage: build
+  image: docker:24
+  services:
+    - docker:24-dind
+  before_script:
+    - docker info
+  script:
+    - make prod-build
+  rules:
+    - if: '$CI_COMMIT_BRANCH == "main"'
+    - if: '$CI_COMMIT_BRANCH == "dev"'
+
+# TEST
+
+test:
+  stage: test
+  image: node:20
+  script:
+    - yarn install --frozen-lockfile # Ibig sabihin: siguraduhin na wala siyang i-update sa yarn.lock (strict mode para CI).
+    - yarn lint
+    - yarn test
+  rules:
+    - if: '$CI_COMMIT_BRANCH == "main"'
+    - if: '$CI_COMMIT_BRANCH == "dev"'
+
+# DEPLOY sample
+
+deploy:
+  stage: deploy
+  image: docker:24
+  services:
+    - docker:24-dind
+  script:
+    - make prod-build
+  rules:
+    - if: '$CI_COMMIT_BRANCH == "main"'
