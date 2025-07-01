@@ -5,4 +5,23 @@ services:
       dockerfile: ./docker/Dockerfile
     ports:
     - "3000:3000"
+    depends_on:
+      - db
+    environment:
+      DATABASE_URL: "postgresql://postgres:postgres@db:5432/mydb?schema=public"
     container_name: next-prisma-crud
+
+  db:
+    image: postgres:15-alpine
+    restart: always
+    environment:
+      POSTGRES_USER: rye
+      POSTGRES_PASSWORD: admin
+      POSTGRES_DB: horyezon
+    ports:
+      - "5432:5432"
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+
+volumes:
+  pgdata:

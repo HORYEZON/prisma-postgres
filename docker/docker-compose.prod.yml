@@ -1,0 +1,5 @@
+services:
+  frontend:
+    environment:
+      - NODE_ENV=production
+    command: yarn start

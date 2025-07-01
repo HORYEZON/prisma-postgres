@@ -1,0 +1,8 @@
+services:
+  frontend:
+    volumes:
+      - ../:/app
+      - /app/node_modules
+    environment:
+      - NODE_ENV=development
+    command: yarn dev
