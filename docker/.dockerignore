@@ -25,5 +25,8 @@ out
 .git
 .gitignore
 
+# SonarQube
+sonar-project.properties
+
 # Docker ignore file itself
 .dockerignore
