@@ -1,19 +1,9 @@
-import { createClient, RedisClientType } from 'redis';
+import Redis from "ioredis";
 
-// createClient infers a RedisClientType
-const client: RedisClientType = createClient({
-  url: process.env.REDIS_URL, // e.g. redis://localhost:6379
+const redis = new Redis({
+  host: process.env.REDIS_HOST || "127.0.0.1",
+  port: Number(process.env.REDIS_PORT) || 6379,
+  password: process.env.REDIS_PASSWORD || undefined,
 });
 
-client.on('error', (err: Error) => {
-  console.error('❌ Redis Client Error:', err);
-});
-
-(async () => {
-  if (!client.isOpen) {
-    await client.connect();
-    console.log('✅ Redis connected');
-  }
-})();
-
-export default client;
+export default redis;

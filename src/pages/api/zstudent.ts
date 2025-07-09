@@ -1,5 +1,6 @@
 import type { NextApiRequest, NextApiResponse } from "next";
 import { prisma } from '@/lib/prisma';
+import redis from '@/lib/redis';
 import { querySchema, createSchema, updateSchema, deleteSchema } from "@/schemas/zstudent"
 import { handleZodError } from "@/utils/handleZodError";
 
@@ -9,6 +10,15 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
             case 'GET': {
                 const query = querySchema.parse(req.query);
                 const limit = query.limit ? parseInt(query.limit) : undefined;
+                const departmentId = query.departmentId ? Number(query.departmentId) : undefined;
+
+                const cacheKey = `students:${departmentId ?? 'all'}:${limit ?? 'all'}`;
+
+                const cached = await redis.get(cacheKey);
+                if(cached) {
+                    console.log("Returning from Redis cache");
+                    return res.status(200).json(JSON.parse(cached));
+                }
 
                 const students = await prisma.student.findMany({
                     take: limit,
@@ -21,6 +31,8 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
                     },
                 });
 
+                await redis.set(cacheKey, JSON.stringify(students), "EX", 60);
+                console.log("Returning from DB & stored in cache");
                 return res.status(200).json(students);
             }
 
@@ -44,6 +56,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
                     },
                 });
 
+                await invalidateStudentCacheWithScan();
                 return res.status(201).json(newStudent);
             }
 
@@ -68,6 +81,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
                     },
                 });
 
+                await invalidateStudentCacheWithScan();
                 return res.status(200).json(updatedStudent);
             }
 
@@ -78,6 +92,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
                     where: { id: body.id },
                 });
 
+                await invalidateStudentCacheWithScan();
                 return res.status(204).end();
             }
 
@@ -90,4 +105,17 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
         if (handleZodError(res, error)) return;
         return res.status(500).json({ error: 'Server error' });
     }
+}
+
+async function invalidateStudentCacheWithScan() {
+    let cursor = '0';
+    do {
+        const [nextCursor, keys] = await redis.scan(cursor, 'MATCH', 'students:*', 'COUNT', '100');
+        cursor = nextCursor;
+
+        if(keys.length) {
+            await redis.del(...keys);
+            console.log("Deleted cache keys:", keys);
+        }
+    } while (cursor !== '0');
 }
