@@ -8,14 +8,15 @@ export const querySchema = z.object({
 export const createSchema = z.object({
     name: z.string(),
     email: z.string().email(),
-    degree: z.string(),
+    degree: z.enum(["Bachelor", "Masteral", "Doctoral"]),
     departmentId: z.number()
 })
 
 export const updateSchema = z.object({
     id: z.number(),
     name: z.string().optional(),
-    degree: z.string().optional(),
+    email: z.string().email(),
+    degree: z.enum(["Bachelor", "Masteral", "Doctoral"]).optional(),
     departmentId: z.number().optional()
 })
 

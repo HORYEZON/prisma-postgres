@@ -1,0 +1,23 @@
+### Get all students
+GET http://localhost:3000/api/student
+
+### Get student by ID
+GET http://localhost:3000/api/student/1
+
+### Get student by ID
+GET http://localhost:3000/api/professor/1
+
+### Create new student
+POST http://localhost:3000/api/student
+Content-Type: application/json
+
+{
+    "name": "Juan Dela Cruz",
+    "email": "juan.delacruz@example.com",
+    "age": 20,
+    "course": "BS Computer Science",
+    "isEnroll": true,
+    "departmentId": 1,
+    "professorId": 1
+}
+
