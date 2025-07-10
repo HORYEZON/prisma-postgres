@@ -25,17 +25,20 @@ model Student {
 }
 
 model Department {
-  id       Int       @id @default(autoincrement())
-  name     String    @unique
-  students Student[]
+  id         Int         @id @default(autoincrement())
+  name       String      @unique
+  professors Professor[]
+  students   Student[]
 }
 
 model Professor {
-  id       Int       @id @default(autoincrement())
-  name     String
-  email    String    @unique
-  degree   Degree
-  students Student[]
+  id           Int        @id @default(autoincrement())
+  name         String
+  email        String     @unique
+  degree       Degree
+  departmentId Int
+  department   Department @relation(fields: [departmentId], references: [id])
+  students     Student[]
 }
 
 enum Status {

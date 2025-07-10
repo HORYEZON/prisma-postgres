@@ -8,7 +8,6 @@
  *       200:
  *         description: List of students
  */
-
 import type { NextApiHandler, NextApiRequest, NextApiResponse } from "next";
 import { prisma } from '@/lib/prisma'
 
@@ -28,7 +27,6 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
             return res.status(500).json({ error: 'Failed to fetch students'})
         }
     }
-
 /**
  * @swagger
  * /api/student:
@@ -68,7 +66,6 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
  *       201:
  *         description: Student created
  */
-
     if (req.method === 'POST') {
         const { name, email, age, course, isEnroll, departmentId, professorId } = req.body
 
@@ -100,8 +97,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
             return res.status(500).json({ error: 'Failed to Create Student'})
         }
     }
-
-    /**
+/**
  * @swagger
  * /api/student:
  *   put:
@@ -138,7 +134,6 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
  *       200:
  *         description: Student updated
  */
-
     if (req.method === 'PUT') {
         // console.log("PUT BODY:", req.body);
         const { id, name, email, age, course, status, isEnroll, departmentId, professorId } = req.body
@@ -170,7 +165,6 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
             return res.status(500).json({ error: 'Failed to update student'})
         }
     }
-    
 /**
  * @swagger
  * /api/student:
@@ -191,7 +185,6 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
  *       204:
  *         description: Student deleted
  */
-
     if(req.method === 'DELETE') {
         const { id } = req.body
 

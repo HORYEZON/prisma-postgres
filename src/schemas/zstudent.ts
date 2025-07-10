@@ -12,7 +12,7 @@ export const createSchema = z.object({
     course: z.string(),
     isEnroll: z.boolean(),
     departmentId: z.number(),
-    professorId: z.number(),
+    professorId: z.number()
 })
 
 export const updateSchema = z.object({
@@ -24,7 +24,7 @@ export const updateSchema = z.object({
     status: z.enum(['ACTIVE', 'GRADUATED', 'DROPPED']).optional(),
     isEnroll: z.boolean().optional(),
     departmentId: z.number().optional(),
-    professorId: z.number().optional(),
+    professorId: z.number().optional()
 })
 
 export const deleteSchema = z.object({
