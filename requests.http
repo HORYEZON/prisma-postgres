@@ -1,23 +1,118 @@
+// STUDENT API | STUDENT API | STUDENT API
+
 ### Get all students
 GET http://localhost:3000/api/student
 
-### Get student by ID
-GET http://localhost:3000/api/student/1
-
-### Get student by ID
-GET http://localhost:3000/api/professor/1
 
 ### Create new student
 POST http://localhost:3000/api/student
 Content-Type: application/json
 
 {
-    "name": "Juan Dela Cruz",
-    "email": "juan.delacruz@example.com",
-    "age": 20,
+    "name": "John Ryan Briz",
+    "email": "jryan.briz@gmail.com",
+    "age": 24,
     "course": "BS Computer Science",
     "isEnroll": true,
     "departmentId": 1,
     "professorId": 1
 }
 
+
+### Update student
+PUT http://localhost:3000/api/student
+Content-Type: application/json
+
+{
+    "id": 1,
+    "name": "Updated John",
+    "course": "BS IT",
+    "status": "GRADUATED",
+    "isEnroll": false
+}
+
+
+### Delete student
+DELETE http://localhost:3000/api/student
+Content-Type: application/json
+
+{
+    "id": 1
+}
+
+
+
+// PROFESSOR API | PROFESSOR API | PROFESSOR API
+
+### Get all professors
+GET http://localhost:3000/api/professor
+
+
+### Create new professor
+POST http://localhost:3000/api/professor
+Content-Type: application/json
+
+{
+    "name": "Prof. Rye",
+    "email": "profrye@gmail.com",
+    "degree": "Doctoral",
+    "departmentId": 1
+}
+
+
+### Update professor
+PUT http://localhost:3000/api/professor
+Content-Type: application/json
+
+{
+    "id": 1,
+    "name": "Prof. Rye Updated",
+    "degree": "Masteral"
+}
+
+
+### Delete professor
+DELETE http://localhost:3000/api/professor
+Content-Type: application/json
+
+{
+    "id": 1
+}
+
+
+
+// DEPARTMENT API | DEPARTMENT API | DEPARTMENT API
+
+### Get all departments
+GET http://localhost:3000/api/department
+
+
+### Create new department
+POST http://localhost:3000/api/department
+Content-Type: application/json
+
+{
+    "name": "College of Engineering",
+    "email": "engineering@univ.edu",
+    "year": 2008
+}
+
+
+### Update department
+PUT http://localhost:3000/api/department
+Content-Type: application/json
+
+{
+    "id": 1,
+    "name": "College of Engg & IT",
+    "year": 2010
+}
+
+
+### Delete department
+DELETE http://localhost:3000/api/department
+Content-Type: application/json
+
+{
+    "id": 1
+}

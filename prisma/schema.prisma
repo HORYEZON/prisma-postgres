@@ -17,18 +17,12 @@ model Student {
   age          Int
   status       Status
   isEnroll     Boolean
-  createdAt    DateTime   @default(now())
   departmentId Int
   professorId  Int
+  updatedAt    DateTime   @updatedAt
+  createdAt    DateTime   @default(now())
   department   Department @relation(fields: [departmentId], references: [id])
   professor    Professor  @relation(fields: [professorId], references: [id])
-}
-
-model Department {
-  id         Int         @id @default(autoincrement())
-  name       String      @unique
-  professors Professor[]
-  students   Student[]
 }
 
 model Professor {
@@ -37,8 +31,21 @@ model Professor {
   email        String     @unique
   degree       Degree
   departmentId Int
+  createdAt    DateTime   @default(now())
+  updatedAt    DateTime   @updatedAt
   department   Department @relation(fields: [departmentId], references: [id])
   students     Student[]
+}
+
+model Department {
+  id         Int         @id @default(autoincrement())
+  name       String      @unique
+  email      String      @unique
+  year       Int
+  createdAt  DateTime    @default(now())
+  updatedAt  DateTime    @updatedAt
+  professors Professor[]
+  students   Student[]
 }
 
 enum Status {
