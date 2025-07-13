@@ -32,3 +32,4 @@ sonar-project.properties
 .dockerignore
 
 .requests.http
+__test__
