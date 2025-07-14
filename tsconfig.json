@@ -21,7 +21,8 @@
       {
         "name": "next"
       }
-    ]
+    ],
+    "types": ["@testing-library/jest-dom"]
   },
   "include": [
     "next-env.d.ts",
