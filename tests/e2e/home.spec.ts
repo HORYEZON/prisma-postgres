@@ -1,8 +1,8 @@
-import { test, expect } from '@playwright/test';
+import { test, expect } from "@playwright/test";
 
-test.use({ browserName: 'webkit' });
+test.use({ browserName: "firefox" });
 
-test('homepage has title', async ({ page }) => {
-  await page.goto('/');
+test("homepage has title", async ({ page }) => {
+  await page.goto("/");
   await expect(page).toHaveTitle(/Next/);
 });
