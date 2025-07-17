@@ -6,7 +6,7 @@ export const querySchema = z.object({
 
 export const createSchema = z.object({
     name: z.string(),
-    email: z.string(),
+    email: z.string().email(),
     year: z.number()
 })
 
