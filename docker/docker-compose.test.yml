@@ -1,0 +1,9 @@
+services:
+  frontend:
+    build:
+      args:
+        MODE: test
+    image: next-prisma:test
+    environment:
+      NODE_ENV: test
+    command: yarn test

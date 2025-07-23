@@ -3,13 +3,19 @@ services:
     build:
       context: ..
       dockerfile: ./docker/Dockerfile
+      args:
+        MODE: development
     ports:
     - "3000:3000"
     depends_on:
       - db
     environment:
+      NODE_ENV: development
       DATABASE_URL: "postgresql://rye:admin@db:5432/horyezon?schema=public"
-    container_name: next-prisma-crud
+    volumes:
+      - ../:/app
+    container_name: next-prisma-dev
+    command: yarn dev
 
   db:
     image: postgres:15-alpine

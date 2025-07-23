@@ -1,5 +1,11 @@
 services:
   frontend:
+    build:
+      args:
+        MODE: production
+    image: next-prisma:prod
+    volumes: []  # remove bind mount in prod
     environment:
-      - NODE_ENV=production
+      NODE_ENV: production
+    container_name: next-prisma-prod
     command: yarn start

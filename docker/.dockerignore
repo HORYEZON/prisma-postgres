@@ -26,10 +26,12 @@ out
 .gitignore
 
 # SonarQube
+.scannerwork
+.swc
 sonar-project.properties
 
 # Docker ignore file itself
 .dockerignore
 
 .requests.http
-__test__
+tests

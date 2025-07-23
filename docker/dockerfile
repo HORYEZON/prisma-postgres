@@ -1,4 +1,7 @@
-FROM node:18-alpine
+ARG NODE_VERSION=18-alpine
+FROM node:${NODE_VERSION}
+
+ARG MODE=production
 WORKDIR /app
 
 COPY package.json yarn.lock ./
@@ -6,7 +9,11 @@ RUN yarn install
 
 COPY . .
 RUN yarn prisma generate
-RUN yarn build
 
-EXPOSE 3000
-CMD ["yarn", "start"]
+RUN if [ "$MODE" != "development" ]; then yarn build; fi
+RUN if [ "$MODE" = "test" ]; then npx install playwright --with-deps; fi
+
+CMD ["sh", "-c", "\
+  if [ \"$MODE\" = \"production\" ]; then yarn start; \
+  elif [ \"$MODE\" = \"test\" ]; then yarn test; \
+  else yarn dev; fi"]
