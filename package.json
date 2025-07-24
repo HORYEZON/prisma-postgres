@@ -11,8 +11,8 @@
     "test:unit": "jest",
     "test:e2e": "playwright test",
     "test:watch": "jest --watch",
-    "tunnel": "yarn localtunnel --port 3000",
-    "dev:tunnel": "yarn dev && yarn tunnel"
+    "tunnel": "npx localtunnel --port 3000",
+    "dev:tunnel": "concurrently \"yarn dev\" \"yarn tunnel\""
   },
   "dependencies": {
     "@popperjs/core": "2.11.8",
@@ -50,6 +50,7 @@
     "@types/swagger-ui-react": "^5.18.0",
     "@types/testing-library__jest-dom": "^6.0.0",
     "autoprefixer": "^10.4.21",
+    "concurrently": "^9.2.0",
     "eslint": "^9",
     "eslint-config-next": "15.3.4",
     "jest": "^30.0.4",
