@@ -10,7 +10,9 @@
     "test": "yarn test:unit && yarn test:e2e",
     "test:unit": "jest",
     "test:e2e": "playwright test",
-    "test:watch": "jest --watch"
+    "test:watch": "jest --watch",
+    "tunnel": "yarn localtunnel --port 3000",
+    "dev:tunnel": "yarn dev && yarn tunnel"
   },
   "dependencies": {
     "@popperjs/core": "2.11.8",
