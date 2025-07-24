@@ -9,10 +9,7 @@ dist
 out
 
 # Env/configs
-.env
-.env.local
-.env.development
-.env.production
+.env*
 
 # OS/IDE stuff
 .DS_Store

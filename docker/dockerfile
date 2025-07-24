@@ -1,19 +1,31 @@
-ARG NODE_VERSION=18-alpine
-FROM node:${NODE_VERSION}
+# ─── Build Stage ────────────────────────────────
+FROM node:18-alpine AS builder
 
 ARG MODE=production
 WORKDIR /app
 
 COPY package.json yarn.lock ./
-RUN yarn install
+RUN yarn install --production
 
 COPY . .
 RUN yarn prisma generate
 
+# Only build if not in development
 RUN if [ "$MODE" != "development" ]; then yarn build; fi
-RUN if [ "$MODE" = "test" ]; then npx install playwright --with-deps; fi
 
-CMD ["sh", "-c", "\
-  if [ \"$MODE\" = \"production\" ]; then yarn start; \
-  elif [ \"$MODE\" = \"test\" ]; then yarn test; \
-  else yarn dev; fi"]
+# ─── Final Runtime Stage ────────────────────────
+FROM node:18-alpine
+
+WORKDIR /app
+
+# Copy only what's needed
+COPY --from=builder /app/package.json /app/yarn.lock ./
+COPY --from=builder /app/node_modules ./node_modules
+COPY --from=builder /app/dist ./dist
+COPY --from=builder /app/prisma ./prisma
+COPY --from=builder /app/.env ./
+
+# Set NODE_ENV for app logic
+ENV NODE_ENV=production
+
+CMD ["yarn", "start"]
